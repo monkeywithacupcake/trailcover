@@ -1,0 +1,13 @@
+Package: trailcover
+Title: Shows How Much Trail You Cover
+Version: 0.0.0.9000
+Authors@R: 
+    person("Jess", "Last", , "dont@email.me", role = c("aut", "cre"))
+Description: Has functions and data to compare your hiking/backpacking to official trails in the Olympic National Park and Olympic National Forest.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+LazyData: true
