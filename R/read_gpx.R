@@ -14,6 +14,7 @@
 #' @export
 #'
 #' @examples \dontrun{
+#' ex_track <- read_single_gpx(trailcover_example("Lake_Angeles.gpx"))
 #' my_track <- read_single_gpx("path_to_my_track.gpx")
 #' }
 read_single_gpx <- function(fpath){

@@ -21,6 +21,7 @@ Attempts to capture total elevation gain (meters)
 }
 \examples{
 \dontrun{
+ex_track <- read_single_gpx(trailcover_example("Lake_Angeles.gpx"))
 my_track <- read_single_gpx("path_to_my_track.gpx")
 }
 }
