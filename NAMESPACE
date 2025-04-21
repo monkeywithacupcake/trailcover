@@ -2,6 +2,7 @@
 
 export(read_gpx_in_folder)
 export(read_single_gpx)
+export(trailcover_example)
 importFrom(dplyr,summarise)
 importFrom(dplyr,ungroup)
 importFrom(magrittr,"%>%")

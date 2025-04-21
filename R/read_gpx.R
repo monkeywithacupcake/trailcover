@@ -18,6 +18,7 @@
 #' }
 read_single_gpx <- function(fpath){
   # use track_points to get elev gain & tracks as line
+  fpath <- check_fpath(fpath)
   name <- gsub("\\s+"," ",trimws(gsub(".gpx","",basename(fpath))))
   gain <- NA_real_
   layers_avail <- sf::st_layers(fpath)
