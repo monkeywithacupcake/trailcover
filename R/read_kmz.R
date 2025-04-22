@@ -41,7 +41,7 @@ read_kmz <- function(fpath){
 #' }
 collapse_geo <- function(sfdf, id_var){
   sfdf <- sfdf %>% # collapse it down
-    dplyr::group_by(id_var) %>%
+    dplyr::group_by(.data[[id_var]]) %>%
     dplyr::summarize(do_union=FALSE) %>%
     sf::st_cast("MULTILINESTRING") %>%
     dplyr::ungroup() %>%
@@ -52,14 +52,18 @@ collapse_geo <- function(sfdf, id_var){
 #'
 #' @param my_sf object of class sf
 #' @param fname string file name ending with '.kmz'
+#' @param id_var string varname you want in the kml for each row
 #'
 #' @export
 #'
 #' @examples \dontrun{
 #' export_as_kmz(my_tracks, "mytracks.kmz")
 #' }
-export_as_kmz <- function(my_sf, fname){
+export_as_kmz <- function(my_sf, fname, id_var){
+  # Create a temporary KML file (replace with your desired file name)
   kml_file <- "temp.kml"
+  my_sf <- my_sf[,c(id_var, "geometry")]
+  names(my_sf) <- c("Name", "geometry") # required for KML
   sf::st_write(my_sf, kml_file, driver = "KML", append = FALSE)
   zip::zip(
     zipfile = fname,
