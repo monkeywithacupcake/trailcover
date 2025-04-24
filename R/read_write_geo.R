@@ -1,4 +1,97 @@
-# read all the .gpx in a folder
+#' Read Geo
+#'
+#' Attempts to identify if your file needs special handling
+#' like it is a kmz or a gpx, otherwise attempts
+#' to read directly with sf::st_read()
+#'
+#' If you want to read in a whole folder of .gpx tracks,
+#' you should use read_gpx_in_folder() instead
+#'
+#' @param fpath
+#'
+#' @importFrom sf st_read
+#' @export
+#'
+#' @examples \dontrun{
+#'
+#' ex_onf_trails <- read_geo(trailcover_example("onf.kmz"))
+#' }
+read_geo <- function(fpath){
+  if(grepl(".gpx$", fpath)){ # assume this is a single .gpx
+
+    sfdf <- read_single_gpx(fpath = fpath)
+    return(sfdf) # exit here
+
+  }
+
+  if(grepl(".kmz$", fpath)){ # assume this is a .kmz
+
+    sfdf <- read_kmz(fpath = fpath)
+    return(sfdf) # exit here
+
+  }
+
+  # we are assuming that we are dealing with a conventional geometry here
+  sfdf <- sf::st_read(fpath)
+  return(sfdf)
+}
+
+
+
+#' Read a Single KMZ into a Simple Features
+#'
+#'
+#' @param fpath string path to gpx file
+#'
+#' @importFrom sf st_read
+#' @importFrom magrittr "%>%"
+#' @importFrom zip unzip
+#'
+#' @export
+#'
+#' @examples \dontrun{
+#' ex_onf_trails <- read_kmz(trailcover_example("onf.kmz"))
+#' my_kmz_trails <- read_single_gpx("path_to_my_file.kmz")
+#' }
+read_kmz <- function(fpath){
+  tmp <- tempfile()
+  zip::unzip(fpath, exdir = tmp)
+  the_files <- dir(tmp, recursive = TRUE)
+  kmz_sf <- sf::st_read(file.path(tmp,the_files[grep(".kml", the_files)]))
+  return(kmz_sf)
+}
+
+
+#' Export as KMZ
+#'
+#' Converts your simple features object into
+#' a kml valid crs and then exports and zips
+#'
+#' @param my_sf object of class sf
+#' @param fname string file name ending with '.kmz'
+#' @param id_var string varname you want in the kml for each row
+#'
+#' @export
+#'
+#' @examples \dontrun{
+#' export_as_kmz(my_tracks, "mytracks.kmz")
+#' }
+export_as_kmz <- function(my_sf, fname, id_var){
+  # Create a temporary KML file (replace with your desired file name)
+  kml_file <- "temp.kml"
+  my_sf <- my_sf[,c(id_var, "geometry")]
+  my_sf <- sf::st_transform(my_sf, sf::st_crs("+proj=longlat +datum=WGS84"))
+  names(my_sf) <- c("Name", "geometry") # required for KML
+  sf::st_write(my_sf, kml_file, driver = "KML", append = FALSE)
+  zip::zip(
+    zipfile = fname,
+    files = kml_file
+  )
+
+  # garbage handling
+  file.remove(kml_file)
+}
+
 
 #' Read a Single GPX into a Simple Features
 #' Uses track_points and/or tracks layers

@@ -3,6 +3,7 @@
 export(collapse_geo)
 export(export_as_kmz)
 export(map_track_v_trail)
+export(read_geo)
 export(read_gpx_in_folder)
 export(read_kmz)
 export(read_single_gpx)
