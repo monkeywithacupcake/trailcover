@@ -4,12 +4,14 @@
 \alias{export_as_kmz}
 \title{Export as KMZ}
 \usage{
-export_as_kmz(my_sf, fname)
+export_as_kmz(my_sf, fname, id_var)
 }
 \arguments{
 \item{my_sf}{object of class sf}
 
 \item{fname}{string file name ending with '.kmz'}
+
+\item{id_var}{string varname you want in the kml for each row}
 }
 \description{
 Export as KMZ
