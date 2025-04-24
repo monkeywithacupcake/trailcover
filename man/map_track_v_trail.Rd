@@ -40,9 +40,9 @@ Allows for an underlying map that can be used to add context.
 \dontrun{
 
 # you want to pass at a minimum two sfs
-onp <- read_sf(file.path("data", "ONP.geojson"))
-this_trail <- filter(onp, TRAIL_NAME == 'LAKE ANGELES TRAIL')
-this_track <- read_single_gpx(file.path("data","done","Lake_Angeles.gpx"))
+ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
+this_trail <- ex_onp_trails[ex_onp_trails$TRAIL_NAME == 'LAKE ANGELES TRAIL',]
+this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
 map_track_v_trail(this_trail, this_track)
 }
 }

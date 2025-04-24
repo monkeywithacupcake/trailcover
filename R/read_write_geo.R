@@ -15,6 +15,7 @@
 #' @examples \dontrun{
 #'
 #' ex_onf_trails <- read_geo(trailcover_example("onf.kmz"))
+#' ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
 #' }
 read_geo <- function(fpath){
   if(grepl(".gpx$", fpath)){ # assume this is a single .gpx

@@ -22,5 +22,6 @@ you should use read_gpx_in_folder() instead
 \dontrun{
 
 ex_onf_trails <- read_geo(trailcover_example("onf.kmz"))
+ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
 }
 }
