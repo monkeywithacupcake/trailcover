@@ -14,7 +14,8 @@ export_as_kmz(my_sf, fname, id_var)
 \item{id_var}{string varname you want in the kml for each row}
 }
 \description{
-Export as KMZ
+Converts your simple features object into
+a kml valid crs and then exports and zips
 }
 \examples{
 \dontrun{

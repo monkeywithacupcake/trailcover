@@ -24,6 +24,9 @@ read_kmz <- function(fpath){
 
 #' Export as KMZ
 #'
+#' Converts your simple features object into
+#' a kml valid crs and then exports and zips
+#'
 #' @param my_sf object of class sf
 #' @param fname string file name ending with '.kmz'
 #' @param id_var string varname you want in the kml for each row
@@ -37,6 +40,7 @@ export_as_kmz <- function(my_sf, fname, id_var){
   # Create a temporary KML file (replace with your desired file name)
   kml_file <- "temp.kml"
   my_sf <- my_sf[,c(id_var, "geometry")]
+  my_sf <- sf::st_transform(my_sf, sf::st_crs("+proj=longlat +datum=WGS84"))
   names(my_sf) <- c("Name", "geometry") # required for KML
   sf::st_write(my_sf, kml_file, driver = "KML", append = FALSE)
   zip::zip(
