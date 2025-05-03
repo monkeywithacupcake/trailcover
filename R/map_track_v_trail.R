@@ -27,6 +27,14 @@
 #' this_trail <- ex_onp_trails[ex_onp_trails$TRAIL_NAME == 'LAKE ANGELES TRAIL',]
 #' this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
 #' map_track_v_trail(this_trail, this_track)
+#'
+#' # because the way the labels are setup, you will see warnings
+#' # from ggplot for placing them on the plot
+#' # you can suppress these, but only if you wrap
+#' # the call with a print, something like so
+#' this_map <- map_track_v_trail(this_trail, this_track)
+#' suppressWarnings(print(this_map))
+#'
 #' }
 map_track_v_trail <- function(trail_sf, track_sf,
                               underlying_map = NA,
@@ -34,6 +42,7 @@ map_track_v_trail <- function(trail_sf, track_sf,
                               track_sf_name_col = "name",
                               trail_color = 'grey70',
                               track_color = 'deeppink') {
+
   if(!inherits(underlying_map, "logical")){ # something was passed
     if(!inherits(underlying_map,"sf")){
       warning("underlying_map is not an sf object and is dropped")
