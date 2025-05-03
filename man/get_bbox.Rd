@@ -16,3 +16,9 @@ bounding box
 Identifies the largest bounding box that covers
 all geometries in list
 }
+\details{
+You do not need this unless you want an underlying map.
+For example, you are plotting a trail and a track and
+want to situate it over roads or other features but still
+have the bounding box focused on the trail.
+}
