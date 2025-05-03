@@ -15,7 +15,7 @@
 #'
 #' @param big_sf sf trail network map
 #' @param little_sf sf trail gpx you completed
-#' @param completion_tolerance numeric value you believe indicates
+#' @param tolerance numeric value you believe indicates
 #' trail completion. defaults to 1, meaning 100% of official
 #' trail length covered. practical completions may be lower.
 #'
@@ -29,12 +29,11 @@
 #' onp_tracked <- get_coverage(big_sf = ex_onp_trails,
 #'                             little_sf = this_track)
 #' onp_tracked$TRAIL_NAME
-#' [1] "HEATHER PARK TRAIL" "LAKE ANGELES TRAIL"
+#' #[1] "HEATHER PARK TRAIL" "LAKE ANGELES TRAIL"
 #' }
 #'
 get_coverage <- function(big_sf, little_sf,
-                         var = "TRAIL_NAME",
-                         completion_tolerance = 1){
+                         tolerance = 1){
   # id trails touched more than 50 m (so not just the cross)
   # assume big_sf and little_sf geometry is linestrings
   # turn the track into a polygon 50 m wide
@@ -105,6 +104,7 @@ get_covered_portion <- function(big_sf,
 #' @param covered_len numeric sum of length of track
 #' @param covered_portion output of get_covered_portion()
 #'
+#' @export
 #' @examples \dontrun{
 #' ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
 #' this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))

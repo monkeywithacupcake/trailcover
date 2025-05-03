@@ -43,13 +43,6 @@ map_track_v_trail <- function(trail_sf, track_sf,
                               trail_color = 'grey70',
                               track_color = 'deeppink') {
 
-  if(!inherits(underlying_map, "logical")){ # something was passed
-    if(!inherits(underlying_map,"sf")){
-      warning("underlying_map is not an sf object and is dropped")
-      underlying_map <- NA # reset it to nothing
-    }
-  }
-
   # make the legend
   keys <- c('trail','track')
   keys.col <- c(trail_color,track_color)
@@ -72,10 +65,8 @@ map_track_v_trail <- function(trail_sf, track_sf,
 
 
   # create the map
-  p <- ggplot2::ggplot()
-  if(!inherits(underlying_map, "logical")){
-    p <- p + ggplot2::geom_sf(data = underlying_map)
-  }
+  p <- handle_underlying_map(underlying_map = underlying_map)
+
   p <- p +
     ggplot2::geom_sf(data = my_tt, ggplot2::aes(color = key, linewidth = key)) +
     ggrepel::geom_label_repel(data = my_tt,

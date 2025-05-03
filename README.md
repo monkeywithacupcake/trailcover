@@ -20,14 +20,16 @@ You can install the development version of trailcover from
 pak::pak("monkeywithacupcake/trailcover")
 ```
 
-## Current State
-
-transferring over functions from outside_oly - if you already mostly
-know how to use sf and r, feel free to try those functions.
-
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Package comes with example data:
+
+- Olympic National Park trails as geojson
+- Lake Angeles hiking track as gpx
+- Olympic National Forest trails as kmz
+
+You can use the example data to see how to use the functions and then
+use your own
 
 ``` r
 library(trailcover)
@@ -43,7 +45,7 @@ this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
 # read in the example Olympic National Park trails
 ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
 #> Reading layer `ONP' from data source 
-#>   `/private/var/folders/2h/k8pm08x94n73r28zjl2xplxh0000gn/T/Rtmp5RZe8u/temp_libpathac26244a4eb1/trailcover/extdata/onp.geojson' 
+#>   `/private/var/folders/2h/k8pm08x94n73r28zjl2xplxh0000gn/T/Rtmp5G2jVn/temp_libpath1022a3d7e2282/trailcover/extdata/onp.geojson' 
 #>   using driver `GeoJSON'
 #> Simple feature collection with 202 features and 2 fields
 #> Geometry type: MULTILINESTRING
@@ -65,3 +67,21 @@ map_track_v_trail(this_trail, this_track)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+
+# see how much of the trail your track covers (distance)
+onp_tracked <- get_coverage(big_sf = ex_onp_trails,
+                            little_sf = this_track)
+#> Warning: attribute variables are assumed to be spatially constant throughout
+#> all geometries
+```
+
+``` r
+
+# get a map of the full trail network with your completions
+map_coverage(trail_network = ex_onp_trails, covered_sf = onp_tracked)
+#> [1] "Total coverage of 0.57% not including any double coverage"
+```
+
+<img src="man/figures/README-example-2.png" width="100%" />

@@ -2,19 +2,37 @@
 % Please edit documentation in R/get_coverage.R
 \name{get_coverage}
 \alias{get_coverage}
-\title{Get Coverage
-creates a sf df of the intersection of
-what has been completed and the trail network}
+\title{Get Coverage}
 \usage{
-get_coverage(big_sf, little_sf)
+get_coverage(big_sf, little_sf, tolerance = 1)
 }
 \arguments{
 \item{big_sf}{sf trail network map}
 
 \item{little_sf}{sf trail gpx you completed}
+
+\item{tolerance}{numeric value you believe indicates
+trail completion. defaults to 1, meaning 100\% of official
+trail length covered. practical completions may be lower.}
 }
 \description{
-Get Coverage
-creates a sf df of the intersection of
-what has been completed and the trail network
+creates a sfdf representing what has been completed
+of the trail network (big_sf) based on your tracks.
+
+For example, if you have done a hike and your .gpx
+contains some portions on forest road and some trails
+you would compare the trail network (or group of trails)
+to your hike gpx (little_sf) and get returned to you
+the trails with the portion your hike covered on them.
+}
+\examples{
+\dontrun{
+ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
+this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
+onp_tracked <- get_coverage(big_sf = ex_onp_trails,
+                            little_sf = this_track)
+onp_tracked$TRAIL_NAME
+#[1] "HEATHER PARK TRAIL" "LAKE ANGELES TRAIL"
+}
+
 }

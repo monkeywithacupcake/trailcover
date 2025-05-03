@@ -29,13 +29,15 @@ You can install the development version of trailcover from [GitHub](https://gith
 pak::pak("monkeywithacupcake/trailcover")
 ```
 
-## Current State
-
-transferring over functions from outside_oly - if you already mostly know how to use sf and r, feel free to try those functions.
-
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Package comes with example data:
+
+ - Olympic National Park trails as geojson
+ - Lake Angeles hiking track as gpx
+ - Olympic National Forest trails as kmz
+ 
+You can use the example data to see how to use the functions and then use your own
 
 ```{r example}
 library(trailcover)
@@ -51,5 +53,12 @@ this_trail <- ex_onp_trails[ex_onp_trails$TRAIL_NAME == 'LAKE ANGELES TRAIL',]
 
 # see the basic overlap map
 map_track_v_trail(this_trail, this_track)
+
+# see how much of the trail your track covers (distance)
+onp_tracked <- get_coverage(big_sf = ex_onp_trails,
+                            little_sf = this_track)
+
+# get a map of the full trail network with your completions
+map_coverage(trail_network = ex_onp_trails, covered_sf = onp_tracked)
 ```
 

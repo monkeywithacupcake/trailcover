@@ -5,36 +5,37 @@
 \title{Map Coverage}
 \usage{
 map_coverage(
-  underlying_map,
   trail_network,
-  trail_coverage,
-  trail_coverage_portion,
+  covered_sf,
+  underlying_map = NA,
   title = "Your Completed Trail Network",
-  caption = "created with outside_oly"
+  caption = "created with R/trailcover"
 )
 }
 \arguments{
-\item{underlying_map}{sf that might represent the
-area around your trail network. For the examples,
-I am using the Olympic Peninsula of Washington to
-underly the Oly National Forest and Park trails}
-
 \item{trail_network}{sf the trail network data
-same data as used as big_sf in the other functions.
-In the examples, this is sf from ONF.geojson and ONP.geojson}
+same data as used as big_sf in the other functions.}
 
-\item{trail_coverage}{sf output of get_coverage()}
+\item{covered_sf}{sf output of get_coverage()}
 
-\item{trail_coverage_portion}{df has TRAIL_NAME
-and portion covered; output of get_covered_portion()}
+\item{underlying_map}{sf that might represent the
+area around your trail network.}
 
 \item{title}{string title you want for your map.
 defaults to "Your Completed Trail Network"}
 
 \item{caption}{string caption you want for your map.
-defaults to "created with outside_oly"}
+defaults to "created with R/trailcover"}
 }
 \description{
 Creates a visual representation of the portion
 of trails covered overlaying the trail network
+}
+\examples{
+ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
+this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
+onp_tracked <- get_coverage(big_sf = ex_onp_trails,
+                            little_sf = this_track)
+map_coverage(trail_network = ex_onp_trails,
+             covered_sf = onp_tracked)
 }

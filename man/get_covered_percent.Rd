@@ -2,24 +2,41 @@
 % Please edit documentation in R/get_coverage.R
 \name{get_covered_percent}
 \alias{get_covered_percent}
-\title{get_covered_percent}
+\title{Get Covered Percent of Trail Network}
 \usage{
-get_covered_percent(big_sf, covered_portion, var = "TRAIL_NAME")
+get_covered_percent(big_sf, covered_len = 0, covered_sf = NULL)
 }
 \arguments{
 \item{big_sf}{sf trail network map}
 
-\item{covered_portion}{output of get_covered_portion()}
+\item{covered_len}{numeric sum of length of track}
 
-\item{var}{string variable indicating trail name}
+\item{covered_portion}{output of get_covered_portion()}
 }
 \description{
-get_covered_percent
+For a given covered portion of trail, returns
+the portion of the whole network covered.
+If you already have the lengths, this is only saving
+you the math.
+}
+\details{
+Does not match up the trails, so you could just put in
+a number or unrelated trail and get a result.
+Usage is for things like comparing lifetime, yearly, or
+a single multi trail adventure with total trails in
+a trail system.
 }
 \examples{
 \dontrun{
-tc <- get_coverage(trail_network, my_gpx_lines)
-cp <- get_covered_portion(trail_network,tc, tolerance = 0.95)
-get_covered_percent(trail_network, cp)
+ex_onp_trails <- read_geo(trailcover_example("onp.geojson"))
+this_track <- read_geo(trailcover_example("Lake_Angeles.gpx"))
+onp_tracked <- get_coverage(big_sf = ex_onp_trails,
+                            little_sf = this_track)
+
+get_covered_percent(big_sf = ex_onp_trails,
+                    covered_sf = onp_tracked)
+# same result
+get_covered_percent(big_sf = ex_onp_trails,
+                    covered_len = 5530.338)
 }
 }
