@@ -60,5 +60,22 @@ onp_tracked <- get_coverage(big_sf = ex_onp_trails,
 
 # get a map of the full trail network with your completions
 map_coverage(trail_network = ex_onp_trails, covered_sf = onp_tracked)
+
+# note that you do not have to do a full trail network
+# this example shows the map only showing the two trails with
+# coverage
+map_coverage(trail_network = ex_onp_trails[ex_onp_trails$TRAIL_NAME %in%
+                                             onp_tracked$TRAIL_NAME,],
+             covered_sf = onp_tracked)
+
+# and this shows just the one trail that we focused on
+# note that the returned object is a plot, which can be
+# modified
+map_coverage(trail_network = this_trail,
+             covered_sf = onp_tracked) +
+  ggplot2::labs(title = "A new title")
+# in this last case, you see that the trail is covered 72%
+# the color of the track is based on the amount of coverage of that 
+# trail and not of the whole system
 ```
 
