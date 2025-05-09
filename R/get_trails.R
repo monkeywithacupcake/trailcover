@@ -12,7 +12,7 @@
 #'
 #' @param track_sf
 #'
-#' @return
+#' @return sf
 #' @export
 #'
 #' @examples \dontrun{
