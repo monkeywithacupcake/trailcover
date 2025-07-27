@@ -116,12 +116,21 @@ read_single_gpx <- function(fpath){
   fpath <- check_fpath(fpath)
   name <- gsub("\\s+"," ",trimws(gsub(".gpx","",basename(fpath))))
   gain <- NA_real_
+  start_time <- NA_real_
+  total_min <- NA_real_
   layers_avail <- sf::st_layers(fpath)
   if('track_points' %in% layers_avail$name){
     gpx <- sf::read_sf(fpath, layer = 'track_points')
     # get the total elevation gained
     if("ele" %in% colnames(gpx)){ gain <- get_elev_gain(gpx$ele)
     }
+    # get the start and total time
+    if("time" %in% colnames(gpx)){
+      start_time <- gpx$time[[1]]
+      total_min <- as.numeric(difftime(gpx$time[[nrow(gpx)]],
+                                       start_time,
+                                       units = "mins"))
+      }
     if(!'tracks' %in% layers_avail$name) { # build it from this
       message("building line from gpx layer 'track_points'")
       gpx <- gpx %>%
@@ -138,6 +147,8 @@ read_single_gpx <- function(fpath){
 
   gpx$name <- name
   gpx$gain <- gain
+  gpx$start_time <- start_time
+  gpx$total_min <- total_min
   return(gpx)
 }
 
